@@ -39,7 +39,7 @@ class Home extends React.Component {
     return (
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.blocksContainer}>
         <Block flex>
-          <Block flex row style={{ paddingTop: iPhoneX() ? 30 : 10 }}>
+          <Block flex row style={{ paddingTop: iPhoneX() ? 30 : 10, paddingBottom: 30 }}>
             <Icon
               name={'align-left-22x'}
               family="NowExtra"
@@ -54,8 +54,6 @@ class Home extends React.Component {
           </Block>
 
           <CardFullImage position={1} image={Images.Inicio001} imageStyle={{ height: 300, width: '100%' }} />
-
-          <CardFullImage position={2} image={Images.Inicio002} imageStyle={{ height: 300, width: '100%' }} />
         </Block>
       </ScrollView>
     );

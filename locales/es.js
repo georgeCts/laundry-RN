@@ -23,6 +23,15 @@ const es = {
         labelTerms: "Ver términos y condiciones",
         checkTerms: "Acepto los términos y condiciones",
         buttonRegisterText: "REGISTRAR"
+    },
+    requestService: {
+        title: "Solicita tu servicio",
+        switchTitle: '¿Servicio express?',
+        expressTitle1: 'El servicio estará listo a más tardar al mediodía',
+        expressTitle2: 'El servicio estará listo en un aproximado de 3 - 5 hrs. (Dependiendo del volúmen enviado)',
+        inputAddress: 'Dirección completa',
+        inputReference: 'Referencias',
+        buttonRequest: 'SOLICITAR'
     }
 }
 

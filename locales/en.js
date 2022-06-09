@@ -23,6 +23,15 @@ const en = {
         labelTerms: "Read service agreements",
         checkTerms: "By checking the box, I agree to abide by all service agreements.",
         buttonRegisterText: "REGISTRAR"
+    },
+    requestService: {
+        title: "Request your service",
+        switchTitle: 'Express service?',
+        expressTitle1: 'The service will be ready maximum the next day at noon',
+        expressTitle2: 'The service will be ready from 3 hrs. to 5 hours (Depending on the volume sent)',
+        inputAddress: 'Full address',
+        inputReference: 'References',
+        buttonRequest: 'REQUEST'
     }
 }
 

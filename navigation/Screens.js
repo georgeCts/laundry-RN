@@ -13,6 +13,7 @@ import RegisterScreen from '../screens/Register';
 import LoginScreen from '../screens/Login';
 import Onboarding from '../screens/Onboarding';
 
+import RequestServiceScreen from '../screens/RequestService';
 import AgendaIndexScreen from '../screens/agenda/Index';
 import AgendaFechaScreen from '../screens/agenda/DateAddressConf';
 import AgendaInsumosScreen from '../screens/agenda/SuppliesConf';
@@ -260,7 +261,7 @@ const DrawerClient = createDrawerNavigator(
       }
     },
     Agenda: {
-      screen: AgendaIndexScreen,
+      screen: RequestServiceScreen,
       navigationOptions: {
         drawerLabel: () => {}
       }

@@ -69,7 +69,7 @@ const RegisterScreen = (baseProps) => {
           confirm   : '',
         });
         setIsLoading(false);
-        Alert.alert("Registro", "Se ha registrado tu cuenta exitosamente, inicia sesión para acceder a Miss Laundry.")
+        Alert.alert("Registro", "Se ha registrado tu cuenta exitosamente, inicia sesión para acceder a Miss Laundry.");
         baseProps.navigation.navigate('Login', {hasMessage: true, message: 'Registro exitoso!'});
       })
       .catch(error => {

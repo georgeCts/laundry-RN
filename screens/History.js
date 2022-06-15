@@ -70,7 +70,7 @@ class History extends React.Component {
                             />
                             <Block flex>
                                 <Text style={styles.nameTitle}>Historial</Text>
-                                <Text>Revisa el historial de servicios TAYD</Text>
+                                <Text>Revisa el historial de servicios</Text>
                             </Block>
                         </Block>
 

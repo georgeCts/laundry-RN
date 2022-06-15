@@ -1,11 +1,11 @@
 import React from 'react';
-import { Image, StyleSheet, Dimensions, Platform, View, ScrollView, Modal, Alert } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Image, StyleSheet, Dimensions, Platform, View, ScrollView, Alert } from 'react-native';
 import { Block, Button, Text, theme } from 'galio-framework';
 
 import { Images, nowTheme } from '../constants/';
 import { Switch, Input } from '../components';
 import { HeaderHeight, iPhoneX } from '../constants/utils';
+import ServicesService from "../services/service";
 import I18n from '../lib/i18n';
 
 const { height, width } = Dimensions.get('screen');
@@ -44,25 +44,12 @@ export default class RequestServiceScreen extends React.Component {
 
             ServicesService.store(params)
                 .then(response => {
-                    this.props.navigation.navigate("AgendaSuccess", {
-                        schedule: this._datetimeFormat()
-                    });
+                    Alert.alert('Servicio', 'El servicio se ha generado exitosamente.');
+                    this.props.navigation.navigate("History");
                 })
                 .catch(e => {
                     this.setState({hasError: true, errorTitle: 'Servicio', errorMessage: e.data.error});
                 });
-            /* this.props.navigation.navigate("AgendaInsumos", {
-                userData        : this.state.userData,
-                propertyInfo    : this.state.propertyInfo,
-                datetime        : {
-                    weekDay     : this.state.date.getDay(),
-                    day         : this.state.date.getDate(),
-                    month       : this.state.date.getMonth(),
-                    year        : this.state.date.getFullYear(),
-                    hour        : this.state.time.getHours(),
-                    minutes     : this.state.time.getMinutes()
-                }
-            }); */
         } else {
             Alert.alert('Upps!', 'Al parecer el formulario se encuentra incompleto.');
         }

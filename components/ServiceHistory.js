@@ -59,30 +59,14 @@ class ServiceHistoryComponent extends React.Component {
         return `${week}, ${datetime.getDate()} de ${month} de ${datetime.getFullYear()}, ${hour}:${minutes} ${type}`;
     }
 
-    _getPropertyDistribution(item) {
+    _getServiceDetails(item) {
         let strDistribution = "";
 
-        item.distribution.map(item => {
+        item.details.map(item => {
             strDistribution += `${item.quantity} ${item.name} \n`;
         });
 
         return strDistribution;
-    }
-
-    _getVehicleServiceDetails(item) {
-        let strService = "";
-
-        item.details.map(item => {
-            strService += `${item.name} \n`;
-        });
-
-        return strService;
-    }
-
-    _handleNextAction = () => {
-        this.props.navigation.navigate("RateService", {
-            service : this.state.service
-        })
     }
 
     render() {
@@ -90,63 +74,45 @@ class ServiceHistoryComponent extends React.Component {
         return (
             <Block flex style={{marginTop: 20}}>
                 <Block middle style={styles.cardContainer}>
-                <TouchableOpacity onPress={() => this.setState({ showInfo: !showInfo })}>
+                <TouchableOpacity onLongPress={() => this.setState({ showInfo: !showInfo })}>
                         <Block row style={{ width: width - theme.SIZES.BASE * 3, paddingVertical: 20, paddingHorizontal: 10}}>
                             <Block style={{justifyContent: 'flex-start', alignContent: 'center'}}>
-                                {this.serviceTypeImage(service.service_type_id)}
+                                {this.serviceTypeImage(service.express)}
                             </Block>
 
                             <View style={{ width: 250, paddingHorizontal: 15}}>
-                                <Text style={[styles.historyTitle]}>{ service.service_type_id == 1 ? service.property_type_name : service.vehicle_type}</Text>
+                                <Text style={[styles.historyTitle]}>{ service.express ? 'Express' : 'Normal'  }</Text>
                                 <Text style={[styles.historySubtitle, styles.divider]} color={nowTheme.COLORS.SECONDARY}>
-                                    {service.service_type_id == 1 ? service.property_name : service.vehicle_brand}
+                                    {this.estatusFormater(service.estatus)}
                                 </Text>
                                 <Block middle style={[styles.section, {width: '93%'}, showInfo && styles.divider]}>
                                     <Text style={[styles.historySubtitleBold]} color={nowTheme.COLORS.SECONDARY}>
                                         { this.formatDateTime(service) }
                                     </Text>
                                 </Block>
-                                
+
                                 {
                                     showInfo && (
                                         <View>
                                             <Block style={styles.divider}>
                                                 <Text style={[styles.historySubtitle]} color={nowTheme.COLORS.SECONDARY}>
-                                                    { service.service_type_id == 1 ? this._getPropertyDistribution(service) : this._getVehicleServiceDetails(service) }
+                                                    {  this._getServiceDetails(service) }
                                                 </Text>
                                             </Block>
-                                            <Text style={[styles.historySubtitle, styles.divider]} color={nowTheme.COLORS.SECONDARY}>
-                                                {`${service.stripe_source_brand}\n${service.stripe_source_number}\n${service.stripe_source_name}`}
-                                            </Text>
+
                                             <Block style={styles.divider}>
                                                 <View style={styles.section}>
                                                     <Text style={styles.historySubtitle}>Subtotal</Text>
-                                                    <Text style={styles.historySubtitle}>${parseFloat(service.total - service.discount).toFixed(2)}</Text>
+                                                    <Text style={styles.historySubtitle}>${parseFloat(service.subtotal).toFixed(2)}</Text>
                                                 </View>
                                                 <View style={[styles.section]}>
-                                                    <Text style={styles.historySubtitle}>Cupón</Text>
-                                                    <Text style={styles.historySubtitle}>${service.discount}</Text>
+                                                    <Text style={styles.historySubtitle}>Impuesto</Text>
+                                                    <Text style={styles.historySubtitle}>${service.tax}</Text>
                                                 </View>
                                                 <View style={[styles.section]}>
                                                     <Text style={styles.historySubtitleBold}>Total</Text>
                                                     <Text style={styles.historySubtitleBold}>${parseFloat(service.total).toFixed(2)}</Text>
                                                 </View>
-                                            </Block>
-
-                                            <Text style={styles.historySubtitleBold}>TAYDER:</Text>
-                                            <Text style={styles.historySubtitle}>{service.provider_user_name}</Text>
-
-                                            <Block middle style={[styles.section, {alignItems: 'flex-end'}]}>
-                                                <Button
-                                                    round
-                                                    color={service.rating > 0 ? nowTheme.COLORS.PLACEHOLDER : nowTheme.COLORS.BASE}
-                                                    disabled={service.rating > 0}
-                                                    style={styles.button}
-                                                    onPress={() => this._handleNextAction()}>
-                                                    <Text style={{ fontFamily: 'trueno-semibold' }} size={14} color={nowTheme.COLORS.WHITE}>
-                                                        Quejas o sugerencias
-                                                    </Text>
-                                                </Button>
                                             </Block>
                                         </View>
                                     )

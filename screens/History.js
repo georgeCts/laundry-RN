@@ -28,6 +28,7 @@ class History extends React.Component {
         const { navigation } = this.props;
 
         await Actions.extractUserData().then((result) => {
+            console.log(result);
              if(result != null) {
                  this.setState({userData : result.user});
                  this._getServices();
@@ -44,8 +45,9 @@ class History extends React.Component {
     }
 
     async _getServices() {
-        await ServicesService.listHistory(this.state.userData.id)
+        await ServicesService.list(this.state.userData.id)
             .then(response => {
+                console.log(response);
                 this.setState({services : response})
             })
             .catch(error => {

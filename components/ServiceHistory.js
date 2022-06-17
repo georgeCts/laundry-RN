@@ -40,30 +40,67 @@ class ServiceHistoryComponent extends React.Component {
     }
 
     formatDateTime = (item) => {
-        let arrItem = item.dt_request.split(" ");
-        let arrDate = arrItem[0].split("-");
-        let arrTime = arrItem[1].split(":");
+        let arrItem = null;
+        let initialPhrase = "";
 
-        let datetime    = new Date(Number(arrDate[0]), Number(arrDate[1]) - 1, Number(arrDate[2]), Number(arrTime[0]), Number(arrTime[1]));
-        let week        = this.state.weekDay[datetime.getDay()];
-        let month       = this.state.months[datetime.getMonth()];
-        let type        = "a.m.";
-        let minutes     = datetime.getMinutes() < 10 ? `0${datetime.getMinutes()}` : datetime.getMinutes();
-        let hour        = datetime.getHours();
+        switch(item.status) {
+            case "PENDING":
+            case "ACCEPTED":
+                arrItem = item.dt_request.split(" ");
+                initialPhrase = "Solicitado:";
+            break;
 
-        if(hour >= 12) {
-            if(hour > 12) hour    -= 12;
-            type    = "p.m.";
+            case "ON PROGRESS":
+                arrItem = item.dt_start.split(" ");
+                initialPhrase = "Inició:";
+            break;
+
+            case "FINISHED":
+                if(item.delivered) {
+                    arrItem = item.dt_finalized.split(" ");
+                    initialPhrase = "Finalizó:";
+                }
+            break;
         }
 
-        return `${week}, ${datetime.getDate()} de ${month} de ${datetime.getFullYear()}, ${hour}:${minutes} ${type}`;
+        if(arrItem != null) {
+            let arrDate = arrItem[0].split("-");
+            let arrTime = arrItem[1].split(":");
+
+            let datetime    = new Date(Number(arrDate[0]), Number(arrDate[1]) - 1, Number(arrDate[2]), Number(arrTime[0]), Number(arrTime[1]));
+            let type        = "a.m.";
+            let minutes     = datetime.getMinutes() < 10 ? `0${datetime.getMinutes()}` : datetime.getMinutes();
+            let hour        = datetime.getHours();
+
+            if(hour >= 12) {
+                if(hour > 12) hour    -= 12;
+                type    = "p.m.";
+            }
+
+            return `${initialPhrase} ${datetime.getDate()}/${arrDate[1]}/${datetime.getFullYear()}, ${hour}:${minutes} ${type}`;
+        } else {
+            return "";
+        }
+    }
+
+    estatusFormater = (statusText) => {
+        let finalText;
+        switch(statusText) {
+            case "PENDING": finalText = "Pendiente"; break;
+            case "ACCEPTED": finalText = "Aceptado"; break;
+            case "ON PROGRESS": finalText = "En progreso"; break;
+            case "FINISHED": finalText = "Finalizado"; break;
+            case "CANCELLED": finalText = "Cancelado"; break;
+        }
+
+        return finalText;
     }
 
     _getServiceDetails(item) {
         let strDistribution = "";
 
         item.details.map(item => {
-            strDistribution += `${item.quantity} ${item.name} \n`;
+            strDistribution += `${item.quantity} ${item.service_catalog.unit_type.key_es} ${item.service_catalog.name_es} ${'$' + item.total}\n`;
         });
 
         return strDistribution;
@@ -71,10 +108,11 @@ class ServiceHistoryComponent extends React.Component {
 
     render() {
         let {service, showInfo} = this.state;
+        console.log(service);
         return (
             <Block flex style={{marginTop: 20}}>
                 <Block middle style={styles.cardContainer}>
-                <TouchableOpacity onLongPress={() => this.setState({ showInfo: !showInfo })}>
+                <TouchableOpacity onPress={() => this.setState({ showInfo: !showInfo })}>
                         <Block row style={{ width: width - theme.SIZES.BASE * 3, paddingVertical: 20, paddingHorizontal: 10}}>
                             <Block style={{justifyContent: 'flex-start', alignContent: 'center'}}>
                                 {this.serviceTypeImage(service.express)}
@@ -83,11 +121,11 @@ class ServiceHistoryComponent extends React.Component {
                             <View style={{ width: 250, paddingHorizontal: 15}}>
                                 <Text style={[styles.historyTitle]}>{ service.express ? 'Express' : 'Normal'  }</Text>
                                 <Text style={[styles.historySubtitle, styles.divider]} color={nowTheme.COLORS.SECONDARY}>
-                                    {this.estatusFormater(service.estatus)}
+                                    {this.estatusFormater(service.status)}
                                 </Text>
                                 <Block middle style={[styles.section, {width: '93%'}, showInfo && styles.divider]}>
                                     <Text style={[styles.historySubtitleBold]} color={nowTheme.COLORS.SECONDARY}>
-                                        { this.formatDateTime(service) }
+                                        { !service.cancelled && this.formatDateTime(service) }
                                     </Text>
                                 </Block>
 

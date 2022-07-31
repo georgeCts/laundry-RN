@@ -1,9 +1,8 @@
 import React from "react";
-import { StyleSheet, Dimensions, Image, View } from "react-native";
+import { StyleSheet, Dimensions, Image, View, TouchableOpacity } from "react-native";
 import { Block, theme, Text, Button } from "galio-framework";
 
 import { Images, nowTheme } from '../constants/';
-import { TouchableOpacity } from "react-native-gesture-handler";
 
 const { width, height } = Dimensions.get("screen");
 const smallScreen = height < 812 ? true : false;
@@ -32,11 +31,11 @@ class ServiceHistoryComponent extends React.Component {
         return null;
     }
 
-    serviceTypeImage(id) {
-        switch(id) {
-            case 1: return (<Image source={Images.Icons.Inmueble} style={{ width: 65, height: 65 }} />)
-            case 2: return (<Image source={Images.Icons.Vehiculo} style={{ width: 65, height: 65 }} />)
-        }
+    serviceTypeImage(isExpress) {
+        if(isExpress)
+            return (<Image source={Images.Icons.Servicio_express} style={{ width: 65, height: 65 }} />);
+        else
+            return (<Image source={Images.Icons.Servicio_normal} style={{ width: 65, height: 65 }} />);
     }
 
     formatDateTime = (item) => {
@@ -59,6 +58,8 @@ class ServiceHistoryComponent extends React.Component {
                 if(item.delivered) {
                     arrItem = item.dt_finalized.split(" ");
                     initialPhrase = "Finalizó:";
+                } else {
+                    initialPhrase = "Finalizando servicio..."
                 }
             break;
         }
@@ -79,17 +80,23 @@ class ServiceHistoryComponent extends React.Component {
 
             return `${initialPhrase} ${datetime.getDate()}/${arrDate[1]}/${datetime.getFullYear()}, ${hour}:${minutes} ${type}`;
         } else {
-            return "";
+            return initialPhrase;
         }
     }
 
-    estatusFormater = (statusText) => {
+    estatusFormater = (service) => {
         let finalText;
-        switch(statusText) {
+        switch(service.status) {
             case "PENDING": finalText = "Pendiente"; break;
             case "ACCEPTED": finalText = "Aceptado"; break;
             case "ON PROGRESS": finalText = "En progreso"; break;
-            case "FINISHED": finalText = "Finalizado"; break;
+            case "FINISHED":
+                if(service.delivered)
+                    finalText = "Finalizado";
+                else
+                    finalText = "Falta entregar";
+
+                break;
             case "CANCELLED": finalText = "Cancelado"; break;
         }
 
@@ -108,20 +115,19 @@ class ServiceHistoryComponent extends React.Component {
 
     render() {
         let {service, showInfo} = this.state;
-        console.log(service);
         return (
             <Block flex style={{marginTop: 20}}>
                 <Block middle style={styles.cardContainer}>
-                <TouchableOpacity onPress={() => this.setState({ showInfo: !showInfo })}>
+                <TouchableOpacity onPress={() =>  this.setState({ showInfo: !showInfo })}>
                         <Block row style={{ width: width - theme.SIZES.BASE * 3, paddingVertical: 20, paddingHorizontal: 10}}>
                             <Block style={{justifyContent: 'flex-start', alignContent: 'center'}}>
                                 {this.serviceTypeImage(service.express)}
                             </Block>
 
                             <View style={{ width: 250, paddingHorizontal: 15}}>
-                                <Text style={[styles.historyTitle]}>{ service.express ? 'Express' : 'Normal'  }</Text>
+                                <Text style={[styles.historyTitle]}>{ service.express ? 'Servicio Express' : ' Servicio Normal'  }</Text>
                                 <Text style={[styles.historySubtitle, styles.divider]} color={nowTheme.COLORS.SECONDARY}>
-                                    {this.estatusFormater(service.status)}
+                                    {this.estatusFormater(service)}
                                 </Text>
                                 <Block middle style={[styles.section, {width: '93%'}, showInfo && styles.divider]}>
                                     <Text style={[styles.historySubtitleBold]} color={nowTheme.COLORS.SECONDARY}>
@@ -181,7 +187,7 @@ const styles = StyleSheet.create({
     historyTitle: {
         fontFamily: 'trueno-extrabold',
         color: nowTheme.COLORS.SECONDARY,
-        fontSize: 24,
+        fontSize: 22,
         textAlign: 'left',
     },
     historySubtitle: {

@@ -7,34 +7,13 @@ import { createDrawerNavigator } from 'react-navigation-drawer';
 // screens
 import Home from '../screens/Home';
 import History from '../screens/History';
-import Schedule from '../screens/Schedule';
 import ProfileScreen from '../screens/perfil/index';
 import RegisterScreen from '../screens/Register';
 import LoginScreen from '../screens/Login';
 import Onboarding from '../screens/Onboarding';
 
 import RequestServiceScreen from '../screens/RequestService';
-import AgendaIndexScreen from '../screens/agenda/Index';
-import AgendaFechaScreen from '../screens/agenda/DateAddressConf';
-import AgendaInsumosScreen from '../screens/agenda/SuppliesConf';
-import AgendaCheckoutScreen from '../screens/agenda/CheckoutConf';
-import AgendaSuccessScreen from '../screens/agenda/Success';
-import AgendaProgressScreen from '../screens/agenda/Progress';
-import AgendaChatScreen from '../screens/agenda/Chat';
-
-import DomicilioIndexScreen from '../screens/domicilios/Index';
-import DomicilioInfoScreen from '../screens/domicilios/Information';
-import DomicilioLocationScreen from '../screens/domicilios/Location';
-
-import MetodoPagoIndexScreen from '../screens/metodosPagos/Index';
-import MetodoPagoAddCardScreen from '../screens/metodosPagos/AddCard';
-
 import CuponesIndexScreen from '../screens/cupones/Index';
-
-import GeneraIngresoIndexScreen from '../screens/generarIngresos/Index';
-
-import SoporteIndexScreen from '../screens/soporte/Index';
-import SoporteCitaScreen from '../screens/soporte/Cita';
 
 // drawer
 import Drawer from './Drawer';
@@ -101,105 +80,6 @@ const ProfileStack = createStackNavigator(
   }
 );
 
-const ChatStack = createStackNavigator(
-  {
-    Chat: {
-      screen: AgendaChatScreen,
-      navigationOptions: ({ navigation }) => ({
-        header: (
-          <Header back goToSchedule title="Chat" iconColor={nowTheme.COLORS.SECONDARY} navigation={navigation} />
-        ),
-        headerTransparent: false
-      })
-    }
-  },
-  {
-    cardStyle: { backgroundColor: '#FFFFFF' },
-    transitionConfig
-  }
-);
-
-const DomicilioStack = createStackNavigator(
-  {
-    DomicilioIndex: {
-      screen: DomicilioIndexScreen,
-      navigationOptions: ({ navigation }) => ({
-        header: (
-          <Header title="Domicilio" iconColor={nowTheme.COLORS.SECONDARY} navigation={navigation} />
-        ),
-        headerTransparent: false
-      })
-    },
-    DomicilioLocation: {
-      screen: DomicilioLocationScreen,
-      navigationOptions: ({ navigation }) => ({
-        header: (
-          <Header back title="Domicilio" iconColor={nowTheme.COLORS.SECONDARY} navigation={navigation} />
-        ),
-        headerTransparent: false
-      })
-    },
-    DomicilioInfo: {
-      screen: DomicilioInfoScreen,
-      navigationOptions: ({ navigation }) => ({
-        header: (
-          <Header back title="Domicilio" iconColor={nowTheme.COLORS.SECONDARY} navigation={navigation} />
-        ),
-        headerTransparent: false
-      })
-    },
-  },
-  {
-    cardStyle: { backgroundColor: '#FFFFFF' },
-    transitionConfig
-  }
-);
-
-const MetodoPagoStack = createStackNavigator(
-  {
-    MetodoPagoIndex: {
-      screen: MetodoPagoIndexScreen,
-      navigationOptions: ({ navigation }) => ({
-        header: (
-          <Header title="Método de pago" iconColor={nowTheme.COLORS.SECONDARY} navigation={navigation} />
-        ),
-        headerTransparent: false
-      })
-    },
-    MetodoPagoAddCard: {
-      screen: MetodoPagoAddCardScreen,
-      navigationOptions: ({ navigation }) => ({
-        header: (
-          <Header back title="Método de pago" iconColor={nowTheme.COLORS.SECONDARY} navigation={navigation} />
-        ),
-        headerTransparent: false
-      })
-    }
-  },
-  {
-    cardStyle: { backgroundColor: '#FFFFFF' },
-    transitionConfig
-  }
-);
-
-const GeneraIngresoStack = createStackNavigator(
-  {
-    GeneraIngresoIndex: {
-      screen: GeneraIngresoIndexScreen,
-      navigationOptions: ({ navigation }) => ({
-        header: (
-          <Header title="Genera Ingresos" iconColor={nowTheme.COLORS.SECONDARY} navigation={navigation} />
-        ),
-        headerTransparent: false
-      })
-    }
-  },
-  {
-    cardStyle: { backgroundColor: '#FFFFFF' },
-    transitionConfig
-  }
-);
-
 const CuponesStack = createStackNavigator(
   {
     CuponesIndex: {
@@ -234,72 +114,10 @@ const DrawerClient = createDrawerNavigator(
         drawerLabel: () => { }
       }
     },
-
-    Soporte: {
-      screen: SoporteIndexScreen,
-      navigationOptions: {
-        drawerLabel: () => { }
-      }
-    },
-    SoporteCita: {
-      screen: SoporteCitaScreen,
-      navigationOptions: {
-        drawerLabel: () => { }
-      }
-    },
-    BolsaTrabajo: {
-      screen: SoporteCitaScreen,
-      navigationOptions: {
-        drawerLabel: () => { }
-      }
-    },
-
-    Schedule: {
-      screen: Schedule,
-      navigationOptions: {
-        drawerLabel: () => { }
-      }
-    },
     Agenda: {
       screen: RequestServiceScreen,
       navigationOptions: {
         drawerLabel: () => {}
-      }
-    },
-    AgendaFecha: {
-      screen: AgendaFechaScreen,
-      navigationOptions: {
-        drawerLabel: () => {}
-      }
-    },
-    AgendaInsumos: {
-      screen: AgendaInsumosScreen,
-      navigationOptions: {
-        drawerLabel: () => { }
-      }
-    },
-    AgendaCheckout: {
-      screen: AgendaCheckoutScreen,
-      navigationOptions: {
-        drawerLabel: () => { }
-      }
-    },
-    AgendaSuccess: {
-      screen: AgendaSuccessScreen,
-      navigationOptions: {
-        drawerLabel: () => { }
-      }
-    },
-    AgendaProgreso: {
-      screen: AgendaProgressScreen,
-      navigationOptions: {
-        drawerLabel: () => { }
-      }
-    },
-    AgendaChat: {
-      screen: ChatStack,
-      navigationOptions: {
-        drawerLabel: () => { }
       }
     },
 
@@ -318,28 +136,6 @@ const DrawerClient = createDrawerNavigator(
           <DrawerItem focused={focused} screen="Profile" title="Idioma" />
         )
       })
-    },
-    Domicilio: {
-      screen: DomicilioStack,
-      navigationOptions: navOpt => ({
-        drawerLabel: ({ focused }) => (
-          <DrawerItem focused={focused} screen="DomicilioIndex" title="Domicilio" />
-        )
-      })
-    },
-    MetodoPago: {
-      screen: MetodoPagoStack,
-      navigationOptions: navOpt => ({
-        drawerLabel: ({ focused }) => (
-          <DrawerItem focused={focused} screen="MetodoPagoIndex" title="Método de pago" />
-        )
-      })
-    },
-    GeneraIngreso: {
-      screen: GeneraIngresoStack,
-      navigationOptions: {
-        drawerLabel: () => { }
-      }
     },
     Cupones: {
       screen: CuponesStack,

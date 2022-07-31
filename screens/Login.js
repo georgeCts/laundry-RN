@@ -89,7 +89,7 @@ const LoginScreen = (baseProps) => {
               </Block>
 
               <Block middle>
-                <Image source={Images.TaydRegistro} style={styles.logo} />
+                <Image source={Images.LoginRegistro} style={styles.logo} />
               </Block>
             </Block>
 

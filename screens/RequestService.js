@@ -1,17 +1,133 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Image, StyleSheet, Dimensions, Platform, View, ScrollView, Alert } from 'react-native';
 import { Block, Button, Text, theme } from 'galio-framework';
+import { withNavigation } from 'react-navigation';
 
 import { Images, nowTheme } from '../constants/';
 import { Switch, Input } from '../components';
 import { HeaderHeight, iPhoneX } from '../constants/utils';
 import ServicesService from "../services/service";
+import Actions from '../lib/actions';
 import I18n from '../lib/i18n';
 
 const { height, width } = Dimensions.get('screen');
 const smallScreen = height < 812 ? true : false;
 
-export default class RequestServiceScreen extends React.Component {
+const RequestServiceScreen = (baseProps) => {
+    const [isExpress, setIsExpress] = useState(false);
+    const [userData, setUserData] = useState(null);
+    const [address, setAddress] = useState('');
+    const [reference, setReference] = useState('');
+    const [isIphone, setIsIphone] = useState(Platform.OS === 'ios');
+    const [isLoading, setIsLoading] = useState(false);
+
+    const [hasError, setHasError] = useState(false);
+    const [errorTitle, setErrorTitle] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+
+    useEffect(() => {
+        const fetchUserInfo = async() => {
+            await Actions.extractUserData().then((result) => {
+                if(result != null) {
+                    setUserData(result.user);
+                }
+            });
+        }
+
+        fetchUserInfo()
+            .catch(console.error);
+    }, [])
+
+    const _handleNextAction = () => {
+        if(address.trim() != '' && reference.trim() != '') {
+            setIsLoading(true);
+            let params = {
+                user_id : userData.id,
+                express : isExpress,
+                address : address,
+                reference : reference,
+            };
+
+            ServicesService.store(params)
+                .then(response => {
+                    setIsLoading(false);
+                    Alert.alert('Servicio', 'El servicio se ha generado exitosamente.');
+                    baseProps.navigation.navigate("History");
+                })
+                .catch(e => {
+                    setIsLoading(false);
+                    setHasError(true);
+                    setErrorTitle('Servicio');
+                    setErrorMessage(e.data.error);
+                });
+        } else {
+            Alert.alert('Upps!', 'Al parecer el formulario se encuentra incompleto.');
+        }
+    }
+
+    return (
+        <Block flex style={styles.container}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+                <Block flex>
+                    <Image source={Images.RequestService} style={styles.image} />
+                </Block>
+
+                <Block flex style={{ backgroundColor: 'white' }}>
+                    <Block space="between" style={styles.padded}>
+                        <Text style={[styles.title, {paddingTop: smallScreen ? 50 : 30}, {marginTop: iPhoneX && 30}]}> { I18n.t('requestService.title') } </Text>
+
+                        <Block row style={{width: width - theme.SIZES.BASE * 4, alignItems: 'center', justifyContent: 'space-evenly'}}>
+                            <Text style={{fontFamily: 'trueno-semibold', fontWeight: '600', fontSize: smallScreen ? 16 : 18}} color={nowTheme.COLORS.BLACK}>
+                                { I18n.t('requestService.switchTitle') }
+                            </Text>
+                            <Switch value={isExpress} onValueChange={(value) => setIsExpress(!isExpress)} />
+                        </Block>
+
+                        <Block middle style={{marginBottom : theme.SIZES.BASE,  width: width - theme.SIZES.BASE * 4}}>
+                            <Text style={[styles.subtitle, {paddingVertical: 10}]}>
+                                { !isExpress ? I18n.t('requestService.expressTitle1') : I18n.t('requestService.expressTitle2') }
+                            </Text>
+                        </Block>
+
+                        <Block width={width * 0.8}>
+                            <Input
+                                placeholder={ I18n.t('requestService.inputAddress') }
+                                placeholderTextColor={nowTheme.COLORS.PLACEHOLDER}
+                                style={styles.inputs}
+                                onChangeText={(text) => setAddress(text)}
+                            />
+                        </Block>
+
+                        <Block width={width * 0.8}>
+                            <Input
+                                placeholder={ I18n.t('requestService.inputReference') }
+                                placeholderTextColor={nowTheme.COLORS.PLACEHOLDER}
+                                style={styles.inputs}
+                                onChangeText={(text) => setReference(text)}
+                            />
+                        </Block>
+
+                        <Block middle style={{ width: width - theme.SIZES.BASE * 4 }}>
+                            <Button
+                                round
+                                color={nowTheme.COLORS.BASE}
+                                style={styles.createButton}
+                                loading={isLoading}
+                                disabled={isLoading}
+                                onPress={() => _handleNextAction()}>
+                                <Text style={{ fontFamily: 'trueno-semibold' }} size={14} color={nowTheme.COLORS.WHITE}>
+                                    { I18n.t('requestService.buttonRequest') }
+                                </Text>
+                            </Button>
+                        </Block>
+                    </Block>
+                </Block>
+            </ScrollView>
+        </Block>
+    );
+}
+
+/* export default class RequestServiceScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -35,6 +151,7 @@ export default class RequestServiceScreen extends React.Component {
 
     _handleNextAction() {
         if(this.state.address.trim() != '' && this.state.reference.trim() != '') {
+            console.log(this.state.userData);
             let params = {
                 user_id : this.state.userData.id,
                 express : this.state.isExpress,
@@ -60,7 +177,7 @@ export default class RequestServiceScreen extends React.Component {
             <Block flex style={styles.container}>
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <Block flex>
-                        <Image source={Images.AgendaFecha} style={styles.image} />
+                        <Image source={Images.RequestService} style={styles.image} />
                     </Block>
 
                     <Block flex style={{ backgroundColor: 'white' }}>
@@ -115,7 +232,7 @@ export default class RequestServiceScreen extends React.Component {
             </Block>
         );
     }
-}
+} */
 
 const styles = StyleSheet.create({
     container: {
@@ -182,3 +299,5 @@ const styles = StyleSheet.create({
         shadowOpacity: 0,
     },
 });
+
+export default withNavigation(RequestServiceScreen);

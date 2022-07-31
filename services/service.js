@@ -9,7 +9,7 @@ function list(userId) {
 
 function store(objService) {
     return request({
-        url: 'services',
+        url: 'service',
         method: 'POST',
         data: objService
     });

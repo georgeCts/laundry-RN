@@ -27,14 +27,6 @@ export default class Drawer extends React.Component {
             {
                 navOptionName: 'Idioma',
                 screenToNavigate: 'NavScreen3',
-            },
-            {
-                navOptionName: 'Domicilio',
-                screenToNavigate: 'NavScreen3',
-            },
-            {
-                navOptionName: 'Método de pago',
-                screenToNavigate: 'NavScreen3',
             }
         ];
         this.itemsBottom = [
@@ -79,7 +71,7 @@ export default class Drawer extends React.Component {
                 <Block row style={styles.header}>
                     <Image source={Images.ProfilePicture} style={{ borderRadius: 25, height: 60, width: 60, marginRight: 25 }} />
                     <Block flex>
-                        <Text style={styles.nameTitle}>{userData != null && userData.info ? userData.info.name : ''}</Text>
+                        <Text style={styles.nameTitle}>{userData != null ? userData.name : ''}</Text>
                         <Text style={{fontFamily: 'trueno', fontSize: 14, lineHeight: 15}}>{userData != null ? userData.email : ''}</Text>
                     </Block>
                 </Block>
@@ -96,14 +88,6 @@ export default class Drawer extends React.Component {
                         <DrawerItem {...this.props} title="Cupones" />
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('CuponesIndex')} style={{ fontFamily: 'trueno', fontSize: 18, }}>
-                        <DrawerItem {...this.props} title="Comparte y gana" />
-                    </TouchableOpacity>
-
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('GeneraIngreso')} style={{ fontFamily: 'trueno', fontSize: 18, }}>
-                        <DrawerItem {...this.props} title="Genera ingresos extras" />
-                    </TouchableOpacity>
-
                     <TouchableOpacity onPress={() => this._logout(this.props)} style={{ fontFamily: 'trueno', fontSize: 18, }}>
                         <DrawerItem {...this.props} title="Cerrar sesión" />
                     </TouchableOpacity>
@@ -111,7 +95,7 @@ export default class Drawer extends React.Component {
                 </Block>
 
                 <Block style={{justifyContent: 'center', alignSelf: 'center', paddingBottom: 30}}>
-                    <Image source={Images.TaydLogoGris} style={{height: 30, width: 140, marginTop: 20}} />
+                    <Image source={Images.Logo_Transparent} style={{height: 140, width: 140}} />
                 </Block>
             </Block>
         );

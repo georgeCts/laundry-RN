@@ -23,25 +23,9 @@ class DrawerItem extends React.Component {
         return (
           <Image source={Images.Icons.Idioma} style={{ width: 30, height: 30 }} />
         );
-      case 'Domicilio':
-        return (
-          <Image source={Images.Icons.Ubicacion} style={{ width: 30, height: 30 }} />
-        );
-      case 'Método de pago':
-        return (
-          <Image source={Images.Icons.Pagos} style={{ width: 30, height: 30 }} />
-        );
       case 'Cupones':
         return (
           <Image source={Images.Icons.Cupon} style={{ width: 30, height: 30 }} />
-        );
-      case 'Comparte y gana':
-        return (
-          <Image source={Images.Icons.Compartir} style={{ width: 30, height: 30 }} />
-        );
-      case 'Genera ingresos extras':
-        return (
-          <Image source={Images.Icons.Ingreso} style={{ width: 30, height: 30 }} />
         );
       case 'Cerrar sesión':
         return (

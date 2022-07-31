@@ -49,7 +49,7 @@ class Home extends React.Component {
               style={{ fontWeight: '700', marginRight: 15, paddingTop: 5 }}
             />
             <Block flex>
-              <Text style={styles.nameTitle}>Bienvenido {userData?.info?.name}</Text>
+              <Text style={styles.nameTitle}>Bienvenido {userData?.name}</Text>
             </Block>
           </Block>
 

@@ -29,9 +29,14 @@ const en = {
         switchTitle: 'Express service?',
         expressTitle1: 'The service will be ready maximum the next day at noon',
         expressTitle2: 'The service will be ready from 3 hrs. to 5 hours (Depending on the volume sent)',
-        inputAddress: 'Full address',
-        inputReference: 'References',
-        buttonRequest: 'REQUEST'
+        inputAddress: 'Full address or Hotel name',
+        inputReference: 'References if able',
+        buttonRequest: 'REQUEST',
+
+
+
+
+        incompleteForm: 'Apparently the form is incomplete.'
     }
 }
 

@@ -54,5 +54,6 @@ export default {
   Inicio001,
   Inicio002,
 
+  LoginRegistro,
   RequestService
 };

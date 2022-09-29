@@ -39,7 +39,7 @@ const RequestServiceScreen = (baseProps) => {
     }, [])
 
     const _handleNextAction = () => {
-        if(address.trim() != '' && reference.trim() != '') {
+        if(address.trim() != '') {
             setIsLoading(true);
             let params = {
                 user_id : userData.id,
@@ -51,17 +51,16 @@ const RequestServiceScreen = (baseProps) => {
             ServicesService.store(params)
                 .then(response => {
                     setIsLoading(false);
-                    Alert.alert('Servicio', 'El servicio se ha generado exitosamente.');
+                    Alert.alert('Yay!', response.success_message);
                     baseProps.navigation.navigate("History");
                 })
                 .catch(e => {
                     setIsLoading(false);
                     setHasError(true);
-                    setErrorTitle('Servicio');
-                    setErrorMessage(e.data.error);
+                    Alert.alert('Upps!', e.data.error_message);
                 });
         } else {
-            Alert.alert('Upps!', 'Al parecer el formulario se encuentra incompleto.');
+            Alert.alert('Upps!', I18n.t('requestService.incompleteForm'));
         }
     }
 

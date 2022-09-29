@@ -29,9 +29,12 @@ const es = {
         switchTitle: '¿Servicio express?',
         expressTitle1: 'El servicio estará listo a más tardar al mediodía',
         expressTitle2: 'El servicio estará listo en un aproximado de 3 - 5 hrs. (Dependiendo del volúmen enviado)',
-        inputAddress: 'Dirección completa',
-        inputReference: 'Referencias',
-        buttonRequest: 'SOLICITAR'
+        inputAddress: 'Dirección completa o nombre de hotel',
+        inputReference: 'Referencias en caso de existir',
+        buttonRequest: 'SOLICITAR',
+
+
+        incompleteForm: 'Al parecer el formulario se encuentra incompleto.'
     }
 }
 

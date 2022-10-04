@@ -19,11 +19,10 @@ const DismissKeyboard = ({ children }) => (
 
 const RegisterScreen = (baseProps) => {
   const [form, setForm] = useState({
-    is_guest  : false,
-    phone     : '',
+    phone_number : '',
     email     : '',
     name      : '',
-    lastname  : '',
+    last_name : '',
     password  : '',
 
   });
@@ -31,11 +30,11 @@ const RegisterScreen = (baseProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const _handlePrivacyPress = () => {
-    Linking.openURL('http://www.tayd.mx/terminos-condiciones');
+    Linking.openURL('https://www.misslaundry.app/terminos-condiciones');
   }
 
   const _handleLogin = () => {
-    if(form.email != '' && form.password != '' && form.name != '' && form.lastname != '' && form.phone != '') {
+    if(form.email != '' && form.password != '' && form.name != '' && form.last_name != '' && form.phone_number != '') {
       if(!chkTerms) {
         _handleRequest();
       } else {
@@ -49,33 +48,39 @@ const RegisterScreen = (baseProps) => {
   const _handleRequest = async() => {
     setIsLoading(true);
 
-    let params = {
-      email : form.email,
-      password : form.password,
-      name : form.name,
-      last_name : form.lastname,
-      phone_number: form.phone,
-      device_id: await AsyncStorage.getItem('movil_token')
-    };
+    const mobileToken = await AsyncStorage.getItem("movil_token");
 
-    await AuthenticationService.signup(params)
-      .then(async (response) => {
-        setForm({
-          phone     : '',
-          email     : '',
-          name      : '',
-          lastname  : '',
-          password  : '',
-          confirm   : '',
-        });
-        setIsLoading(false);
-        Alert.alert("Registro", "Se ha registrado tu cuenta exitosamente, inicia sesión para acceder a Miss Laundry.");
-        baseProps.navigation.navigate('Login', {hasMessage: true, message: 'Registro exitoso!'});
-      })
-      .catch(error => {
-        setIsLoading(false);
-        Alert.alert('Upps!', 'Ocurrió un error al realizar tu registro.');
-      })
+    if(mobileToken != null) {
+      let params = {
+        email : form.email,
+        password : form.password,
+        name : form.name,
+        last_name : form.last_name,
+        phone_number: form.phone_number,
+        device_id: mobileToken
+      };
+
+      await AuthenticationService.signup(params)
+        .then(async (response) => {
+          setForm({
+            phone_number : '',
+            email     : '',
+            name      : '',
+            last_name : '',
+            password  : '',
+            confirm   : '',
+          });
+          setIsLoading(false);
+          Alert.alert("Yay!", I18n.t('signUp.successMessage'));
+          baseProps.navigation.navigate('Login', {hasMessage: true, message: 'Registro exitoso!'});
+        })
+        .catch(error => {
+          setIsLoading(false);
+          Alert.alert('Upps!', I18n.t('signUp.errorMessage'));
+        })
+    } else {
+      Alert.alert('Upps!', I18n.t('misc.notificationsPrivilege'));
+    }
   }
 
   const _goBack = () => {
@@ -115,7 +120,7 @@ const RegisterScreen = (baseProps) => {
                         iconContent={
                           <Image style={styles.inputIcons} source={Images.Icons.Telefono} />
                         }
-                        onChangeText={(text) => setForm({ ...form, phone: text })}
+                        onChangeText={(text) => setForm({ ...form, phone_number: text })}
                       />
                     </Block>
                     <Block width={width * 0.8}>
@@ -149,7 +154,7 @@ const RegisterScreen = (baseProps) => {
                         iconContent={
                           <Image style={styles.inputIcons} source={Images.Icons.Apellido} />
                         }
-                        onChangeText={(text) => setForm({ ...form, lastname: text })}
+                        onChangeText={(text) => setForm({ ...form, last_name: text })}
                       />
                     </Block>
                     <Block width={width * 0.8}>

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "809342184629",
+    "project_id": "miss-laundry",
+    "storage_bucket": "miss-laundry.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:809342184629:android:72391b4c742434cecaa2fc",
+        "android_client_info": {
+          "package_name": "com.georgecmtz.laundry"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "809342184629-v7ko70msgbi2ea340mnen08ka27bscig.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClGAuMP2KCDjzccO7JDGVsf6Lji9W_SCY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "809342184629-v7ko70msgbi2ea340mnen08ka27bscig.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

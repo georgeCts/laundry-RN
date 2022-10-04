@@ -1,4 +1,7 @@
 const en = {
+    misc: {
+        notificationsPrivilege: "You need to enable notification privileges before continuing."
+    },
     onBoarding: {
         buttonLoginText: "LOG IN",
         buttonGuestText: "GUEST",
@@ -11,7 +14,11 @@ const en = {
         labelRegister1: "Don't have an account?",
         labelRegister2: "Sign Up",
         labelLostPassword: "Forgot password?",
-        buttonSignInText: "LOG IN"
+        buttonSignInText: "LOG IN",
+
+        // MESSAGES
+        errorMessage1: "An unexpected error occurred while logging in.",
+        errorMessage2: "You can't join as a guest because this device already has an account."
     },
     signUp: {
         title: "SIGN UP",
@@ -22,7 +29,11 @@ const en = {
         inputPassword: "Password",
         labelTerms: "Read service agreements",
         checkTerms: "By checking the box, I agree to abide by all service agreements.",
-        buttonRegisterText: "REGISTRAR"
+        buttonRegisterText: "REGISTRAR",
+
+        // MESSAGES
+        successMessage: "Your account has been successfully registered, log in to access Miss Laundry.",
+        errorMessage: "An error occurred while registering, please try again."
     },
     requestService: {
         title: "Request your service",
@@ -33,9 +44,7 @@ const en = {
         inputReference: 'References if able',
         buttonRequest: 'REQUEST',
 
-
-
-
+        // MESSAGES
         incompleteForm: 'Apparently the form is incomplete.'
     }
 }

@@ -1,4 +1,7 @@
 const es = {
+    misc: {
+        notificationsPrivilege: "Es necesario activar los privilegios de notificaciones antes de continuar."
+    },
     onBoarding: {
         buttonLoginText: "INICIAR SESIÓN",
         buttonGuestText: "INVITADO",
@@ -11,7 +14,11 @@ const es = {
         labelRegister1: "¿Aún no tienes cuenta?",
         labelRegister2: "Regístrate",
         labelLostPassword: "¿No puedes acceder a tu cuenta?",
-        buttonSignInText: "INGRESAR"
+        buttonSignInText: "INGRESAR",
+
+        // MESSAGES
+        errorMessage1: "Ocurrió un error inesperado al iniciar sesión.",
+        errorMessage2: "No puedes entrar como invitado porque este dispositivo ya tiene una cuenta."
     },
     signUp: {
         title: "REGISTRO",
@@ -22,7 +29,11 @@ const es = {
         inputPassword: "Contraseña",
         labelTerms: "Ver términos y condiciones",
         checkTerms: "Acepto los términos y condiciones",
-        buttonRegisterText: "REGISTRAR"
+        buttonRegisterText: "REGISTRAR",
+
+        // MESSAGES
+        successMessage: "Se ha registrado tu cuenta exitosamente, inicia sesión para acceder a Miss Laundry.",
+        errorMessage: "Ocurrió un error al realizar tu registro, intenta nuevamente."
     },
     requestService: {
         title: "Solicita tu servicio",
@@ -33,7 +44,7 @@ const es = {
         inputReference: 'Referencias en caso de existir',
         buttonRequest: 'SOLICITAR',
 
-
+        // MESSAGES
         incompleteForm: 'Al parecer el formulario se encuentra incompleto.'
     }
 }

@@ -4,7 +4,6 @@ import { Block, Text, } from 'galio-framework';
 
 import { Input } from '../../components';
 import { Images, nowTheme } from '../../constants';
-import { iPhoneX } from "../../constants/utils";
 import Actions from "../../lib/actions";
 
 const { width, height } = Dimensions.get('screen');
@@ -14,7 +13,6 @@ class ProfileScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        userData    : null,
         name        : '',
         lastname    : '',
         phone       : '',
@@ -26,11 +24,10 @@ class ProfileScreen extends React.Component {
     await Actions.extractUserData().then((result) => {
          if(result != null) {
              this.setState({
-                 userData   : result.user,
-                 name       : result.user.info.name,
-                 lastname   : result.user.info.last_name,
-                 phone      : result.user.info.phone,
-                 email      : result.user.email,
+                 name       : result.name,
+                 lastname   : result.last_name,
+                 phone      : result.phone_number,
+                 email      : result.email,
             });
          }
     });
@@ -104,9 +101,9 @@ class ProfileScreen extends React.Component {
                     </Block>
                 </Block>
 
-                <Block style={styles.logoContainer}>
+                {/* <Block style={styles.logoContainer}>
                     <Image source={Images.TaydLogoGris} style={{height: 30, width: 140, marginTop: 20}} />
-                </Block>
+                </Block> */}
             </Block>
         </ScrollView>
     );

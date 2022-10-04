@@ -36,29 +36,32 @@ export default class Onboarding extends React.Component {
 
     const mobileToken = await AsyncStorage.getItem("movil_token");
 
-    let params = {
-      is_guest : true,
-      device_id : mobileToken
-    };
+    if(mobileToken != null) {
+      let params = {
+        is_guest : true,
+        device_id : mobileToken
+      };
 
-    await AuthenticationService.guest(params)
-      .then(async (response) => {
-        try {
-          await AsyncStorage.setItem('access_token', response.token);
-          await AsyncStorage.setItem('user', JSON.stringify(response));
+      await AuthenticationService.guest(params)
+        .then(async (response) => {
+          try {
+            await AsyncStorage.setItem('access_token', response.token);
+            await AsyncStorage.setItem('user', JSON.stringify(response));
 
+            this.setState({ isLoading: false });
+            this.props.navigation.navigate('Home');
+          } catch (error) {
+            this.setState({ isLoading: false });
+            Alert.alert('Upps!', I18n.t('login.errorMessage1'));
+          }
+        })
+        .catch(error => {
           this.setState({ isLoading: false });
-          this.props.navigation.navigate('Home');
-        } catch (error) {
-          console.error(error);
-          this.setState({ isLoading: false });
-          Alert.alert('Inicio de sesión', 'Ocurrió un error inesperado al iniciar sesión.');
-        }
-      })
-      .catch(error => {
-        this.setState({ isLoading: false });
-        Alert.alert('Upps!', 'Correo o contraseña incorrectas.');
-      })
+          Alert.alert('Upps!', I18n.t('login.errorMessage1'));
+        });
+    } else {
+      Alert.alert('Upps!', I18n.t('misc.notificationsPrivilege'));
+    }
   }
 
   render() {
@@ -86,7 +89,7 @@ export default class Onboarding extends React.Component {
                   </Button>
                 </Block>
 
-                <Block row style={{marginTop: theme.SIZES.BASE * 0.8}}>
+                {/* <Block row style={{marginTop: theme.SIZES.BASE * 0.8}}>
                   <Button
                     shadowless
                     style={styles.button}
@@ -95,7 +98,7 @@ export default class Onboarding extends React.Component {
                   >
                     <Text style={{ fontFamily: 'trueno-semibold', fontSize: 20, fontWeight: '600' }} color={nowTheme.COLORS.WHITE}>{ I18n.t('onBoarding.buttonGuestText') }</Text>
                   </Button>
-                </Block>
+                </Block> */}
 
                 <Block row style={{marginTop: theme.SIZES.BASE * 0.8,marginBottom: theme.SIZES.BASE * 0.5}}>
                   <Button

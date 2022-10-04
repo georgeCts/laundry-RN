@@ -55,13 +55,13 @@ class CuponesIndexScreen extends React.Component {
     }
 
     async _getCoupons() {
-        await CouponService.getAll(this.state.userData.id)
+        /* await CouponService.getAll(this.state.userData.id)
             .then(response => {
                 this.setState({coupons : response})
             })
             .catch(error => {
                 Alert.alert("Ocurrió un fallo al buscar los cupones.");
-            })
+            }) */
     }
 
     storeCoupon() {
